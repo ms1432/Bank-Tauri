@@ -7,7 +7,9 @@ import Form from "../components/Form";
 import Label from "../components/Label";
 
 function Register() {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -18,18 +20,37 @@ function Register() {
     navigate(link);
   };
 
+  const validatePhoneNumber = (number) => {
+    const phoneRegex = /^\d{9}$/;
+    return phoneRegex.test(number);
+  };
+
   const handleSubmit = (e) => {
+    if (name !== undefined) {
+      return;
+    }
+    if (lastName !== undefined) {
+      return;
+    }
+    if (!validatePhoneNumber(phoneNumber)) {
+      return;
+    }
+    if (email === undefined) {
+      return;
+    }
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-
-    console.log("Username:", username);
+    if (birthdate === undefined) {
+      return;
+    }
+    console.log("Name:", name);
+    console.log("Lastname:", lastName);
+    console.log("Phone number:", phoneNumber);
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("Birthdate:", birthdate);
-
-    alert("Registration successful!");
   };
 
   return (
@@ -38,9 +59,21 @@ function Register() {
       <Form onSubmit={handleSubmit}>
         <Input
           type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <Input
+          type="text"
+          placeholder="Lastname"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        <Input
+          type="number"
+          placeholder="Phone numer"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
         />
         <Input
           type="email"
